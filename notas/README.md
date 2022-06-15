@@ -5,6 +5,7 @@
 **React Navegation**
 
 `npm install @react-navigation/native`
+`npm install @react-navigation/native-stack`
 `expo install react-native-screens react-native-safe-area-context`
 
 **Instalaciones necesarias para ejecutar un nuevo proyecto usando react native element**
@@ -16,6 +17,12 @@
 `npm install react-native-vector-icons`
 
 `npx react-native link react-native-vector-icons`
+
+**Styled components**
+
+`npm install --save styled-components`
+
+`import styled from "styled-components/native";`
 
 **Página para por ver los iconos disponibles a usar**
 
