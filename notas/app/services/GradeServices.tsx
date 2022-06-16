@@ -14,3 +14,7 @@ let grades: Array<IGredes> = [
 export const saveGrades = (grade: IGredes | any) => {
   grades.push(grade);
 };
+
+export const getGrades = (): Array<IGredes> => {
+  return grades;
+};

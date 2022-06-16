@@ -14,12 +14,12 @@ export default function App() {
     <NavigationContainer>
       <StarkGrades.Navigator>
         <StarkGrades.Screen
-          name='GradeFormNav'
-          component={GradeForm}
-        />
-        <StarkGrades.Screen
           name='GradeListNav'
           component={GredeList}
+        />
+        <StarkGrades.Screen
+          name='GradeFormNav'
+          component={GradeForm}
         />
       </StarkGrades.Navigator>
     </NavigationContainer>

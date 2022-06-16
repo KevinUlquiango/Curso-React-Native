@@ -32,11 +32,13 @@ const GradeForm = () => {
   const [alumn, setAlumn] = useState<any | IGredes>(initialState);
 
   const save = () => {
-    validate();
-    const { subject, grade } = alumn;
-    saveGrades({ subject, grade });
+    if (validate()) {
+      const { subject, grade } = alumn;
+      saveGrades({ subject, grade });
+    }
   };
-  const validate = () => {
+  const validate = (): boolean => {
+    let isValido: boolean = false;
     let { subject, grade } = alumn;
     grade = parseFloat(grade);
     validateAlumn("", "");
@@ -45,8 +47,10 @@ const GradeForm = () => {
         "Debe Agregar una Materia",
         "Debe Agregar una nota entre 0 y 10"
       );
+      return isValido;
     } else if (subject === "") {
       validateAlumn("Debe Agregar una Materia", "");
+      return isValido;
     } else if (
       grade === "" ||
       isNaN(grade) ||
@@ -54,8 +58,10 @@ const GradeForm = () => {
       grade >= 10
     ) {
       validateAlumn("", "Debe Agregar una nota entre 0 y 10");
+      return isValido;
+    } else {
+      return (isValido = true);
     }
-    console.log(typeof grade);
   };
   const validateAlumn = (
     messageSubject: string,
