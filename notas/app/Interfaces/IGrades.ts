@@ -1,5 +1,5 @@
 export interface IGredes {
-  subject: string | number;
+  subject: string;
   grade: string | number;
   errorMessageSubject?: string;
   errorMessageGrade?: string;

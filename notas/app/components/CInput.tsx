@@ -11,11 +11,13 @@ export const CInput = (props: IGredeForm | any) => {
     funtionality,
     value,
     name,
-    errorMessage
+    errorMessage,
+    isNew
   } = props;
 
   return (
     <Input
+      disabled={!isNew && name == "subject"}
       value={value}
       onChangeText={(txt) => {
         funtionality({ ...data, [name]: txt });
@@ -23,6 +25,7 @@ export const CInput = (props: IGredeForm | any) => {
       placeholder={placeholder}
       label={label}
       errorMessage={data[errorMessage]}
+      keyboardType={name == "grade" ? "numeric" : "default"}
     />
   );
 };

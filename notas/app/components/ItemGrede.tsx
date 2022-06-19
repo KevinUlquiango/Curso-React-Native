@@ -1,14 +1,36 @@
+import { Avatar, ListItem } from "@rneui/base";
 import React from "react";
-import { View, Text } from "react-native";
-import { Product } from "../../../navegacion/app/screens/ProductsScreen";
+import { Text, TouchableHighlight } from "react-native";
 import { IGredes } from "../Interfaces/IGrades";
 
-export const ItemGrede = ({ qualification }: IGredes | any) => {
+export const ItemGrede = ({
+  qualification,
+  navigation,
+  refresh
+}: IGredes | any) => {
   return (
-    <View style={{ marginTop: 10 }}>
-      <Text>
-        {qualification.subject} {qualification.grade}
-      </Text>
-    </View>
+    <TouchableHighlight
+      onPress={() => {
+        navigation.navigate("GradeFormNav", {
+          qualification,
+          refresh: refresh
+        });
+      }}
+    >
+      <ListItem bottomDivider>
+        <Avatar
+          title={qualification.subject.substring(0, 1)}
+          containerStyle={{ backgroundColor: "#6733b9" }}
+          rounded
+        />
+        <ListItem.Content>
+          <ListItem.Title> {qualification.subject} </ListItem.Title>
+        </ListItem.Content>
+        <ListItem.Content>
+          <ListItem.Subtitle>{qualification.grade}</ListItem.Subtitle>
+        </ListItem.Content>
+        <ListItem.Chevron />
+      </ListItem>
+    </TouchableHighlight>
   );
 };

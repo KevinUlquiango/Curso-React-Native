@@ -5,5 +5,4 @@ export const Wrapper = styled.View`
   background-color: #fff;
   align-items: center;
   justify-content: center;
-  margin-bottom: 50px;
 `;

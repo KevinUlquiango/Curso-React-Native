@@ -18,3 +18,14 @@ export const saveGrades = (grade: IGredes | any) => {
 export const getGrades = (): Array<IGredes> => {
   return grades;
 };
+export const updateGrades = (grade: IGredes) => {
+  let position = find(grade.subject);
+  grades[position] = grade;
+};
+const find = (subject: string): any => {
+  return grades.findIndex((grade) => {
+    if (grade.subject === subject) {
+      return grade;
+    }
+  });
+};

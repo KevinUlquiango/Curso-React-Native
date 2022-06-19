@@ -5,27 +5,33 @@ import { CInput } from "../components/CInput";
 import { IGredes } from "../Interfaces/IGrades";
 
 import { IGredeForm } from "../Interfaces/IGredeForm";
-import { saveGrades } from "../services/GradeServices";
+import { saveGrades, updateGrades } from "../services/GradeServices";
 import { Wrapper } from "./style";
+const gradeObject: Array<IGredeForm> = [
+  {
+    name: "subject",
+    label: "Materia",
+    placeholder: "Ejemplo: Matematicas",
+    messageError: "errorMessageSubject"
+  },
+  {
+    name: "grade",
+    label: "Nota",
+    placeholder: "0-10",
+    messageError: "errorMessageGrade"
+  }
+];
+const GradeForm = ({ navigation, route }: any) => {
+  let dataQualification = route.params?.qualification;
 
-const GradeForm = () => {
-  const gradeObject: Array<IGredeForm> = [
-    {
-      name: "subject",
-      label: "Materia",
-      placeholder: "Ejemplo: Matematicas",
-      messageError: "errorMessageSubject"
-    },
-    {
-      name: "grade",
-      label: "Nota",
-      placeholder: "0-10",
-      messageError: "errorMessageGrade"
-    }
-  ];
+  let isNew = dataQualification !== undefined ? false : true;
+
+  let updateGrade = isNew ? "" : dataQualification.grade;
+  let updateSubject = isNew ? "" : dataQualification.subject;
+
   const initialState: IGredes = {
-    subject: "",
-    grade: "",
+    subject: updateSubject,
+    grade: updateGrade.toString(),
     errorMessageGrade: "",
     errorMessageSubject: ""
   };
@@ -33,8 +39,19 @@ const GradeForm = () => {
 
   const save = () => {
     if (validate()) {
+      const refresh = route.params?.refresh;
+
       const { subject, grade } = alumn;
-      saveGrades({ subject, grade });
+      if (isNew) {
+        saveGrades({ subject, grade });
+      } else {
+        if (refresh !== undefined) {
+          refresh();
+        }
+        updateGrades({ subject, grade });
+      }
+
+      navigation.goBack();
     }
   };
   const validate = (): boolean => {
@@ -54,8 +71,8 @@ const GradeForm = () => {
     } else if (
       grade === "" ||
       isNaN(grade) ||
-      grade <= 0 ||
-      grade >= 10
+      grade < 0 ||
+      grade > 10
     ) {
       validateAlumn("", "Debe Agregar una nota entre 0 y 10");
       return isValido;
@@ -80,6 +97,7 @@ const GradeForm = () => {
       {gradeObject.map((data: IGredeForm | any) => {
         return (
           <CInput
+            isNew={isNew}
             data={alumn}
             key={data.name}
             name={data.name}
@@ -93,7 +111,7 @@ const GradeForm = () => {
       })}
 
       <Button
-        title='Guadar'
+        title={isNew ? "Guadar" : "Actualizar"}
         icon={{
           name: "save",
           type: "Entypo",
